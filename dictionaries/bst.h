@@ -16,7 +16,6 @@ public:
     };
     node *root;
 
-public:
     Bst();
     [[nodiscard]] node* getRoot();
     node **search(int v);

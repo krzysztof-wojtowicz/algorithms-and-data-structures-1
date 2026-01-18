@@ -15,11 +15,13 @@ public:
     Avl();
     static void insert(int v, node *&root, bool &h);
     static void deleteV(int v, node *&root, bool &h);
+    static void printLevelOrder(node *root);
+
+protected:
     static void RR(node *&p);
     static void LL(node *&p);
     static void LR(node *&p);
     static void RL(node *&p);
-    static void printLevelOrder(node *root);
 };
 
 } // dictionaries
