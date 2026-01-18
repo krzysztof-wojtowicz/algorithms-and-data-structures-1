@@ -29,6 +29,7 @@ public:
     void printTab() const;
     void buildHeapFromTop(int tab[], int n);
     void buildHeapFromBottom(int tab[], int n);
+    int getHl();
 };
 
 } // priority_queues

@@ -134,4 +134,8 @@ void Heap::buildHeapFromBottom(int tab[], int n) {
     }
 }
 
+// return hl value
+int Heap::getHl() {
+    return hl;
+}
 } // priority_queues
