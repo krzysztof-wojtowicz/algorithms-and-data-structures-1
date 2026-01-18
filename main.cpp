@@ -22,7 +22,7 @@ using namespace priority_queues;
 using namespace dictionaries;
 using namespace sorting;
 
-enum SortingType {
+enum SortingAlgorithm {
     SELECTION,
     INSERTION,
     BUBBLE,
@@ -30,48 +30,64 @@ enum SortingType {
     COMB,
     HEAP,
     HEAP2,
+    QUICK,
+    QUICK2,
 };
+
+void sorting_usage(int tab[], int n, SortingAlgorithm algorithm = BUBBLE, bool isOutput = false);
+void priority_queues_usage();
+void dictionaries_usage();
 
 int main() {
     /* SORTING ALGORITHMS */
-    int A[] = {-100, 5,2,3,1,0}; // A[0] => sentinel
+    int A[] = {-100,5,2,3,1,0}; // A[0] => sentinel
     int n = 5; // without sentinel
-    // choose sorting algorithm
-    SortingType type = HEAP2;
-    bool isAnim = true; // console output
-
-    std::cout<<"BEFORE:"<<std::endl;
-    Sort::printTab(A, n);
-    switch (type) {
-        case SELECTION:
-            Sort::selection(A, n, isAnim);
-            break;
-        case INSERTION:
-            Sort::insertion(A, n, isAnim);
-            break;
-        case BUBBLE:
-            Sort::bubble(A, n, isAnim);
-            break;
-        case MIX:
-            Sort::mix(A, n, isAnim);
-            break;
-        case COMB:
-            Sort::comb(A, n, isAnim);
-            break;
-        case HEAP:
-            Sort::heap(A, n, isAnim);
-            break;
-        case HEAP2:
-            Sort::heap2(A, n, isAnim);
-            break;
-        default:
-            Sort::bubble(A, n, isAnim);
-            break;
-    }
-    std::cout<<"AFTER:"<<std::endl;
-    Sort::printTab(A, n);
+    sorting_usage(A, n, QUICK2, true);
 
     return 0;
+}
+
+void sorting_usage(int tab[], int n, SortingAlgorithm algorithm, bool isOutput) {
+    std::cout<<"BEFORE:"<<std::endl;
+    Sort::printTab(tab, n);
+    std::cout<<std::endl;
+
+    switch (algorithm) {
+        case SELECTION:
+            Sort::selection(tab, n, isOutput);
+            break;
+        case INSERTION:
+            Sort::insertion(tab, n, isOutput);
+            break;
+        case BUBBLE:
+            Sort::bubble(tab, n, isOutput);
+            break;
+        case MIX:
+            Sort::mix(tab, n, isOutput);
+            break;
+        case COMB:
+            Sort::comb(tab, n, isOutput);
+            break;
+        case HEAP:
+            Sort::heap(tab, n, isOutput);
+            break;
+        case HEAP2:
+            Sort::heap2(tab, n, isOutput);
+            break;
+        case QUICK:
+            Sort::quick(tab, n, isOutput);
+            break;
+        case QUICK2:
+            Sort::quick2(tab, n, isOutput);
+            break;
+        default:
+            Sort::bubble(tab, n, isOutput);
+            break;
+    }
+
+    std::cout<<std::endl<<"AFTER:"<<std::endl;
+    Sort::printTab(tab, n);
+    std::cout<<std::endl;
 }
 
 void priority_queues_usage() {
@@ -263,4 +279,11 @@ void dictionaries_usage() {
     //     std::cout<<std::endl;
     //     Avl::printLevelOrder(avl_tree.getRoot());
     // }
+
+    /* B Tree*/
+    // TODO
+
+    /* Splay tree */
+    // TODO
 }
+

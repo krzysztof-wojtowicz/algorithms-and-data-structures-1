@@ -13,8 +13,8 @@ using namespace priority_queues;
 namespace sorting {
 
 // selection sort algorithm
-void Sort::selection(int tab[], int n, bool isAnim) {
-    if (isAnim) std::cout<<"<<< SELECTION SORT >>>"<<std::endl;
+void Sort::selection(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< SELECTION SORT >>>"<<std::endl;
 
     for (int i = 1; i < n; i++) {
         int iMin = i;
@@ -24,7 +24,7 @@ void Sort::selection(int tab[], int n, bool isAnim) {
         }
 
         std::swap(tab[i], tab[iMin]);
-        if (isAnim) {
+        if (isOutput) {
             std::cout<<"TAB: [i="<<i<<"]"<<std::endl;
             printTab(tab, n);
         }
@@ -33,8 +33,8 @@ void Sort::selection(int tab[], int n, bool isAnim) {
 }
 
 // insertion sort algorithm
-void Sort::insertion(int tab[], int n, bool isAnim) {
-    if (isAnim) std::cout<<"<<< INSERTION SORT >>>"<<std::endl;
+void Sort::insertion(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< INSERTION SORT >>>"<<std::endl;
 
     // sentinel
     tab[0] = -10000;
@@ -49,7 +49,7 @@ void Sort::insertion(int tab[], int n, bool isAnim) {
 
         tab[j+1] = v;
 
-        if (isAnim) {
+        if (isOutput) {
             std::cout<<"TAB: [i="<<i<<"]"<<std::endl;
             printTab(tab, n);
         }
@@ -57,8 +57,8 @@ void Sort::insertion(int tab[], int n, bool isAnim) {
 }
 
 // bubble sort algorithm
-void Sort::bubble(int tab[], int n, bool isAnim) {
-    if (isAnim) std::cout<<"<<< BUBBLE SORT >>>"<<std::endl;
+void Sort::bubble(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< BUBBLE SORT >>>"<<std::endl;
 
     for (int i = 1; i < n; i++) {
         for (int j = 1; j <= n - i; j++) {
@@ -67,7 +67,7 @@ void Sort::bubble(int tab[], int n, bool isAnim) {
             }
         }
 
-        if (isAnim) {
+        if (isOutput) {
             std::cout<<"TAB: [i="<<i<<"]"<<std::endl;
             printTab(tab, n);
         }
@@ -75,8 +75,8 @@ void Sort::bubble(int tab[], int n, bool isAnim) {
 }
 
 // mix sort algorithm (bubble sort from both sides)
-void Sort::mix(int tab[], int n, bool isAnim) {
-    if (isAnim) std::cout<<"<<< MIX SORT >>>"<<std::endl;
+void Sort::mix(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< MIX SORT >>>"<<std::endl;
 
     int l = 1;
     int r = n - 1;
@@ -93,7 +93,7 @@ void Sort::mix(int tab[], int n, bool isAnim) {
 
         // update r
         r = k - 1;
-        if (isAnim) {
+        if (isOutput) {
             std::cout<<"TAB: [l="<<l<<",r="<<r<<"]"<<std::endl;
             printTab(tab, n);
         }
@@ -108,7 +108,7 @@ void Sort::mix(int tab[], int n, bool isAnim) {
 
         // update l
         l = k + 1;
-        if (isAnim) {
+        if (isOutput) {
             std::cout<<"TAB: [l="<<l<<",r="<<r<<"]"<<std::endl;
             printTab(tab, n);
         }
@@ -116,8 +116,8 @@ void Sort::mix(int tab[], int n, bool isAnim) {
 }
 
 // comb sort algorithm
-void Sort::comb(int tab[], int n, bool isAnim) {
-    if (isAnim) std::cout<<"<<< COMB SORT >>>"<<std::endl;
+void Sort::comb(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< COMB SORT >>>"<<std::endl;
 
     int gap = n;
     bool swapped = true;
@@ -135,7 +135,7 @@ void Sort::comb(int tab[], int n, bool isAnim) {
             }
         }
 
-        if (isAnim) {
+        if (isOutput) {
             std::cout<<"TAB: [g="<<gap<<",s="<<swapped<<"]"<<std::endl;
             printTab(tab, n);
         }
@@ -143,13 +143,13 @@ void Sort::comb(int tab[], int n, bool isAnim) {
 }
 
 // heap sort algorithm using regular heap (implemented in priority_queues)
-void Sort::heap(int tab[], int n, bool isAnim) {
-    if (isAnim) std::cout<<"<<< HEAP SORT (regular heap) >>>"<<std::endl;
+void Sort::heap(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< HEAP SORT (regular heap) >>>"<<std::endl;
 
     // create heap from tab
     auto heap = Heap();
     heap.buildHeapFromBottom(&tab[1], n);
-    if (isAnim) {
+    if (isOutput) {
         std::cout<<"HEAP STATE:"<<std::endl;
         heap.printHeap();
     }
@@ -161,7 +161,7 @@ void Sort::heap(int tab[], int n, bool isAnim) {
         tab[i] = val;
         i--;
 
-        if (isAnim) {
+        if (isOutput) {
             std::cout<<"TAB: [i="<<i<<"]"<<std::endl;
             printTab(tab, n);
             std::cout<<"HEAP STATE:"<<std::endl;
@@ -171,15 +171,15 @@ void Sort::heap(int tab[], int n, bool isAnim) {
 }
 
 // heap sort algorithm using leftist heap (implemented in priority_queues)
-void Sort::heap2(int tab[], int n, bool isAnim) {
-    if (isAnim) std::cout<<"<<< HEAP SORT (leftist heap) >>>"<<std::endl;
+void Sort::heap2(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< HEAP SORT (leftist heap) >>>"<<std::endl;
 
     // create heap from tab
     auto heap = LeftistHeap();
     for (int i = 1; i <= n; i++) {
         heap.insert(tab[i]);
     }
-    if (isAnim) {
+    if (isOutput) {
         std::cout<<"HEAP STATE (level order):"<<std::endl;
         LeftistHeap::printLevelOrder(heap.getRoot());
         std::cout<<std::endl;
@@ -192,7 +192,7 @@ void Sort::heap2(int tab[], int n, bool isAnim) {
         tab[i] = val;
         i--;
 
-        if (isAnim) {
+        if (isOutput) {
             std::cout<<"TAB: [i="<<i<<"]"<<std::endl;
             printTab(tab, n);
             std::cout<<"HEAP STATE (level order):"<<std::endl;
@@ -202,9 +202,99 @@ void Sort::heap2(int tab[], int n, bool isAnim) {
     }
 }
 
+// quick sort algorithm using partition 1 (Hoare method)
+void Sort::quick(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< QUICK SORT (Hoare method) >>>"<<std::endl;
+
+    quickR(tab, 1, n, isOutput, 1);
+}
+
+// quick sort algorithm using partition 2 (Lomuto method)
+void Sort::quick2(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< QUICK SORT (Lomuto method) >>>"<<std::endl;
+
+    quickR(tab, 1, n, isOutput, 2);
+}
+
+// partition function for quick sort algorithm (version 1)
+int Sort::partition1(int tab[], int l, int r) {
+    // select first element as pivot
+    int v = tab[l];
+    // two indexes
+    int i = l;
+    int j = r + 1;
+
+    do {
+        do {
+            i++;
+        } while (tab[i] < v && i < r);
+
+        do {
+            j--;
+        } while (tab[j] > v && j > l);
+
+        if (i < j) {
+            std::swap(tab[i], tab[j]);
+        }
+    } while (i < j);
+
+    // insert pivot in its position
+    tab[l] = tab[j];
+    tab[j] = v;
+    return j;
+}
+
+// partition function for quick sort algorithm (version 2)
+int Sort::partition2(int tab[], int l, int r) {
+    // select last elements as pivot
+    int v = tab[r];
+    // one index
+    int i = l - 1;
+
+    for (int j = l; j <= r-1; j++) {
+        if (tab[j] <= v) {
+            i++;
+            std::swap(tab[i], tab[j]);
+        }
+    }
+
+    std::swap(tab[i+1], tab[r]);
+
+    return i + 1;
+}
+
+// recursive function for quick sort
+void Sort::quickR(int tab[], int l, int r, bool isOutput, int partitionType) {
+    int j;
+    // partition
+    switch (partitionType) {
+        case 1:
+            j = partition1(tab, l, r);
+            break;
+        case 2:
+            j = partition2(tab, l, r);
+            break;
+    }
+
+    if (isOutput) {
+        std::cout<<"TAB [pivot="<<tab[j]<<"]"<<std::endl;
+        printTab(tab,r,l);
+    }
+
+    // recursive call for the left part
+    if (j - 1 > l) {
+        quickR(tab, l, j - 1, isOutput, partitionType);
+    }
+
+    // recursive call for the right part
+    if (j + 1 < r) {
+        quickR(tab, j + 1, r, isOutput, partitionType);
+    }
+}
+
 // prints tab with visualization
-void Sort::printTab(int tab[], int n) {
-    for (int i = 1; i <= n; i++) {
+void Sort::printTab(int tab[], int n, int start) {
+    for (int i = start; i <= n; i++) {
         for (int j = 0; j < tab[i]; j++) {
             std::cout<<"-";
         }
