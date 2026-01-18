@@ -22,4 +22,10 @@ add_executable(Kolos1 main.cpp
         dictionaries/bst.h
         dictionaries/avl.cpp
         dictionaries/avl.h
+        dictionaries/b_tree.cpp
+        dictionaries/b_tree.h
+        dictionaries/splay_tree.cpp
+        dictionaries/splay_tree.h
+        sorting/sort.cpp
+        sorting/sort.h
 )

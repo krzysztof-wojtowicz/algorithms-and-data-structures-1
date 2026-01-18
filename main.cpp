@@ -15,26 +15,61 @@
 #include "dictionaries/bst.h"
 #include "dictionaries/avl.h"
 
+/* SORTING ALGORITHMS*/
+#include "sorting/sort.h"
+
 using namespace priority_queues;
 using namespace dictionaries;
+using namespace sorting;
+
+enum SortingType {
+    SELECTION,
+    INSERTION,
+    BUBBLE,
+    MIX,
+    COMB,
+    HEAP,
+    HEAP2,
+};
 
 int main() {
-    /* AVL tree*/
-    Avl avl_tree = Avl();
-    bool h;
-    int tab[] = {4,5,7,2,1,3,6};
-    for (int v : tab) {
-        Avl::insert(v, avl_tree.root, h);
-        std::cout<<std::endl;
-        Avl::printLevelOrder(avl_tree.getRoot());
-    }
+    /* SORTING ALGORITHMS */
+    int A[] = {-100, 5,2,3,1,0}; // A[0] => sentinel
+    int n = 5; // without sentinel
+    // choose sorting algorithm
+    SortingType type = HEAP2;
+    bool isAnim = true; // console output
 
-    int tab2[] = {4,8,5};
-    for (int v : tab2) {
-        Avl::deleteV(v, avl_tree.root, h);
-        std::cout<<std::endl;
-        Avl::printLevelOrder(avl_tree.getRoot());
+    std::cout<<"BEFORE:"<<std::endl;
+    Sort::printTab(A, n);
+    switch (type) {
+        case SELECTION:
+            Sort::selection(A, n, isAnim);
+            break;
+        case INSERTION:
+            Sort::insertion(A, n, isAnim);
+            break;
+        case BUBBLE:
+            Sort::bubble(A, n, isAnim);
+            break;
+        case MIX:
+            Sort::mix(A, n, isAnim);
+            break;
+        case COMB:
+            Sort::comb(A, n, isAnim);
+            break;
+        case HEAP:
+            Sort::heap(A, n, isAnim);
+            break;
+        case HEAP2:
+            Sort::heap2(A, n, isAnim);
+            break;
+        default:
+            Sort::bubble(A, n, isAnim);
+            break;
     }
+    std::cout<<"AFTER:"<<std::endl;
+    Sort::printTab(A, n);
 
     return 0;
 }
@@ -211,4 +246,21 @@ void dictionaries_usage() {
     // Bst::node *deleted = bst_tree.deleteV(8);
     // delete(deleted);
     // Bst::print(bst_tree.getRoot());
+
+    /* AVL tree*/
+    // Avl avl_tree = Avl();
+    // bool h;
+    // int tab[] = {4,5,7,2,1,3,6};
+    // for (int v : tab) {
+    //     Avl::insert(v, avl_tree.root, h);
+    //     std::cout<<std::endl;
+    //     Avl::printLevelOrder(avl_tree.getRoot());
+    // }
+    //
+    // int tab2[] = {4,8,5};
+    // for (int v : tab2) {
+    //     Avl::deleteV(v, avl_tree.root, h);
+    //     std::cout<<std::endl;
+    //     Avl::printLevelOrder(avl_tree.getRoot());
+    // }
 }
