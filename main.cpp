@@ -15,6 +15,7 @@
 #include "dictionaries/array.h"
 #include "dictionaries/bst.h"
 #include "dictionaries/avl.h"
+#include "dictionaries/b_tree.h"
 
 /* SORTING ALGORITHMS*/
 #include "sorting/sort.h"
@@ -46,6 +47,7 @@ enum Dictionary {
     ORDERED_ARRAY,
     BST_TREE,
     AVL_TREE,
+    B_TREE,
 };
 
 void sorting_usage(int tab[], int n, SortingAlgorithm algorithm = BUBBLE, bool isOutput = false);
@@ -65,9 +67,9 @@ int main() {
         }
         case DICTIONARIES: {
             /* DICTIONARIES USAGE EXAMPLE */
-            int A[] = {5, 3, 1, 7, 9, 12, 15};
-            int n = 7;
-            dictionaries_usage(A, n, AVL_TREE);
+            int A[] = {20, 30, 10, 40, 15, 38, 25, 5, 2, 25, 22, 42, 48, 34, 7, 26, 28};
+            int n = 17;
+            dictionaries_usage(A, n, B_TREE);
             break;
         }
         case PRIORITY_QUEUES:
@@ -344,7 +346,8 @@ void dictionaries_usage(int tab[], int n, Dictionary dictionary) {
             AVL dict = AVL();
             for (int i = 0; i < n; i++) {
                 dict.insert(tab[i]);
-            }std::cout<<"BEFORE INSERT:"<<std::endl;
+            }
+            std::cout<<"BEFORE INSERT:"<<std::endl;
             std::cout<<"IN ORDER: "; dict.print();
             std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
             std::cout<<std::endl;
@@ -362,6 +365,32 @@ void dictionaries_usage(int tab[], int n, Dictionary dictionary) {
             std::cout<<"IN ORDER: "; dict.print();
             std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
             std::cout<<std::endl;
+            break;
+        }
+        // TODO fix b_tree insert and/or delete
+        case B_TREE: {
+            std::cout<<"<<< B-TREE EXAMPLE (not working) >>>"<<std::endl;
+
+            BTree dict = BTree();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            std::cout<<"LEVEL ORDER: "<<std::endl; dict.printLevelOrder();
+            std::cout<<std::endl;
+
+            int v1 = 23;
+            dict.insert(v1);
+            std::cout<<"AFTER INSERT (v = "<<v1<<")"<<std::endl;
+            std::cout<<"LEVEL ORDER: "<<std::endl; dict.printLevelOrder();
+            std::cout<<std::endl;
+
+            int v2 = 2;
+            dict.deleteV(v2);
+            std::cout<<"AFTER DELETION (v = "<<v2<<")"<<std::endl;
+            std::cout<<"LEVEL ORDER: "<<std::endl; dict.printLevelOrder();
+            std::cout<<std::endl;
+
             break;
         }
         default:
