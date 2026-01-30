@@ -17,8 +17,10 @@
 #include "dictionaries/avl.h"
 #include "dictionaries/b_tree.h"
 #include "dictionaries/splay_tree.h"
+#include "dictionaries/rst.h"
 
 /* SORTING ALGORITHMS*/
+#include "dictionaries/rst.h"
 #include "sorting/sort.h"
 
 using namespace priority_queues;
@@ -50,6 +52,7 @@ enum Dictionary {
     AVL_TREE,
     B_TREE,
     SPLAY_TREE,
+    RST_TREE,
 };
 
 void sorting_usage(int tab[], int n, SortingAlgorithm algorithm = BUBBLE, bool isOutput = false);
@@ -69,9 +72,9 @@ int main() {
         }
         case DICTIONARIES: {
             /* DICTIONARIES USAGE EXAMPLE */
-            int A[] = {1,2,3,4,5,6,7,8,9,10};
-            int n = 10;
-            dictionaries_usage(A, n, SPLAY_TREE);
+            int A[] = {5,1,8,3,4,9};
+            int n = 6;
+            dictionaries_usage(A, n, RST_TREE);
             break;
         }
         case PRIORITY_QUEUES:
@@ -417,6 +420,27 @@ void dictionaries_usage(int tab[], int n, Dictionary dictionary) {
             std::cout<<"AFTER DELETE (SPLAY(5)):"<<std::endl;
             std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
             std::cout<<std::endl;
+        }
+        case RST_TREE: {
+            std::cout<<"<<< RST TREE EXAMPLE >>>"<<std::endl;
+
+            RST dict = RST();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }
+
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            std::cout<<"LEVEL ORDER: "<<std::endl; dict.printLevelOrder();
+
+            dict.insert(10);
+
+            std::cout<<"AFTER INSERT (10):"<<std::endl;
+            std::cout<<"LEVEL ORDER: "<<std::endl; dict.printLevelOrder();
+
+            dict.deleteV(5);
+
+            std::cout<<"AFTER DELETION (5):"<<std::endl;
+            std::cout<<"LEVEL ORDER: "<<std::endl; dict.printLevelOrder();
         }
         default:
             break;
