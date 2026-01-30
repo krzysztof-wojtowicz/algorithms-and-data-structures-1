@@ -16,18 +16,19 @@ public:
 
     SplayTree();
     static void splay(int v, node *&root);
-    static void moveToRoot(int v, node *&root);
     void insert(int v);
     void deleteV(int v);
     node *search(int v);
+    void printLevelOrder();
 
 protected:
-    void LZig(node *&p);
-    void LZigZig(node *&p);
-    void LZigZag(node *&p);
-    void RZig(node *&p);
-    void RZigZig(node *&p);
-    void RZigZag(node *&p);
+    static void LZig(node *&p);
+    static void LZigZig(node *&p);
+    static void LZigZag(node *&p);
+    static void RZig(node *&p);
+    static void RZigZig(node *&p);
+    static void RZigZag(node *&p);
+    static void printLevelOrderR(node *root);
 };
 
 } // dictionaries

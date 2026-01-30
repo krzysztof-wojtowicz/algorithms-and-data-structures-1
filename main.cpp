@@ -16,6 +16,7 @@
 #include "dictionaries/bst.h"
 #include "dictionaries/avl.h"
 #include "dictionaries/b_tree.h"
+#include "dictionaries/splay_tree.h"
 
 /* SORTING ALGORITHMS*/
 #include "sorting/sort.h"
@@ -48,6 +49,7 @@ enum Dictionary {
     BST_TREE,
     AVL_TREE,
     B_TREE,
+    SPLAY_TREE,
 };
 
 void sorting_usage(int tab[], int n, SortingAlgorithm algorithm = BUBBLE, bool isOutput = false);
@@ -67,9 +69,9 @@ int main() {
         }
         case DICTIONARIES: {
             /* DICTIONARIES USAGE EXAMPLE */
-            int A[] = {20, 30, 10, 40, 15, 38, 25, 5, 2, 25, 22, 42, 48, 34, 7, 26, 28};
-            int n = 17;
-            dictionaries_usage(A, n, B_TREE);
+            int A[] = {1,2,3,4,5,6,7,8,9,10};
+            int n = 10;
+            dictionaries_usage(A, n, SPLAY_TREE);
             break;
         }
         case PRIORITY_QUEUES:
@@ -392,6 +394,29 @@ void dictionaries_usage(int tab[], int n, Dictionary dictionary) {
             std::cout<<std::endl;
 
             break;
+        }
+        case SPLAY_TREE: {
+            std::cout<<"<<< SPLAY TREE EXAMPLE >>>"<<std::endl;
+
+            SplayTree dict = SplayTree();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }
+            std::cout<<"BEFORE SEARCH:"<<std::endl;
+            std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
+            std::cout<<std::endl;
+
+            dict.search(1);
+
+            std::cout<<"AFTER SEARCH (SPLAY(1)):"<<std::endl;
+            std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
+            std::cout<<std::endl;
+
+            dict.deleteV(5);
+
+            std::cout<<"AFTER DELETE (SPLAY(5)):"<<std::endl;
+            std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
+            std::cout<<std::endl;
         }
         default:
             break;

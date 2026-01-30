@@ -30,4 +30,6 @@ add_executable(Kolos1 main.cpp
         sorting/sort.h
         dictionaries/array.cpp
         dictionaries/array.h
+        dictionaries/BB_tree.cpp
+        dictionaries/BB_tree.h
 )
