@@ -12,6 +12,7 @@
 #include "priority_queues/binomial_tree.h"
 
 /* DICTIONARIES */
+#include "dictionaries/array.h"
 #include "dictionaries/bst.h"
 #include "dictionaries/avl.h"
 
@@ -21,6 +22,12 @@
 using namespace priority_queues;
 using namespace dictionaries;
 using namespace sorting;
+
+enum ProgramType {
+    SORTING_ALGORITHMS,
+    DICTIONARIES,
+    PRIORITY_QUEUES,
+};
 
 enum SortingAlgorithm {
     SELECTION,
@@ -34,15 +41,41 @@ enum SortingAlgorithm {
     QUICK2,
 };
 
+enum Dictionary {
+    UNORDERED_ARRAY,
+    ORDERED_ARRAY,
+    BST_TREE,
+    AVL_TREE,
+};
+
 void sorting_usage(int tab[], int n, SortingAlgorithm algorithm = BUBBLE, bool isOutput = false);
 void priority_queues_usage();
-void dictionaries_usage();
+void dictionaries_usage(int tab[], int n, Dictionary dictionary = UNORDERED_ARRAY);
 
 int main() {
-    /* SORTING ALGORITHMS */
-    int A[] = {-100,5,2,3,1,0}; // A[0] => sentinel
-    int n = 5; // without sentinel
-    sorting_usage(A, n, QUICK2, true);
+    ProgramType type = DICTIONARIES;
+
+    switch (type) {
+        case SORTING_ALGORITHMS: {
+            /* SORTING ALGORITHMS USAGE EXAMPLE */
+            int A[] = {-100,3,5,2,1,4,6,0,7}; // A[0] => sentinel
+            int n = 8; // without sentinel
+            sorting_usage(A, n, QUICK, true);
+            break;
+        }
+        case DICTIONARIES: {
+            /* DICTIONARIES USAGE EXAMPLE */
+            int A[] = {5, 3, 1, 7, 9, 12, 15};
+            int n = 7;
+            dictionaries_usage(A, n, AVL_TREE);
+            break;
+        }
+        case PRIORITY_QUEUES:
+            // TODO
+            break;
+        default:
+            break;
+    }
 
     return 0;
 }
@@ -244,46 +277,95 @@ void priority_queues_usage() {
     // TODO
 }
 
-void dictionaries_usage() {
-    /* BST tree */
-    // Bst bst_tree = Bst();
-    //
-    // bst_tree.insert(10);
-    // bst_tree.insert(15);
-    // bst_tree.insert(8);
-    // bst_tree.insert(12);
-    // bst_tree.insert(18);
-    // bst_tree.insert(5);
-    // Bst::print(bst_tree.getRoot());
-    //
-    // Bst::node **val = bst_tree.search(12);
-    // std::cout<<(*val)->key<<std::endl;
-    //
-    // Bst::node *deleted = bst_tree.deleteV(8);
-    // delete(deleted);
-    // Bst::print(bst_tree.getRoot());
+void dictionaries_usage(int tab[], int n, Dictionary dictionary) {
+    switch (dictionary) {
+        case UNORDERED_ARRAY: {
+            std::cout<<"<<< UNORDERED ARRAY EXAMPLE >>>"<<std::endl;
 
-    /* AVL tree*/
-    // Avl avl_tree = Avl();
-    // bool h;
-    // int tab[] = {4,5,7,2,1,3,6};
-    // for (int v : tab) {
-    //     Avl::insert(v, avl_tree.root, h);
-    //     std::cout<<std::endl;
-    //     Avl::printLevelOrder(avl_tree.getRoot());
-    // }
-    //
-    // int tab2[] = {4,8,5};
-    // for (int v : tab2) {
-    //     Avl::deleteV(v, avl_tree.root, h);
-    //     std::cout<<std::endl;
-    //     Avl::printLevelOrder(avl_tree.getRoot());
-    // }
+            Array dict = Array(tab, n);
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            dict.print();
+            int v = 4;
+            dict.insert(v);
+            std::cout<<"AFTER INSERT (v = "<<v<<", i = "<<dict.search(v)<<"):"<<std::endl;
+            dict.print();
+            std::cout<<"AFTER DELETION (v = "<<v<<"):"<<std::endl;
+            dict.deleteV(v);
+            dict.print();
+            break;
+        }
+        case ORDERED_ARRAY: {
+            std::cout<<"<<< ORDERED ARRAY EXAMPLE >>>"<<std::endl;
 
-    /* B Tree*/
-    // TODO
+            OrderedArray dict = OrderedArray(tab, n);
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            dict.print();
+            int v = 13;
+            dict.insert(v);
+            std::cout<<"AFTER INSERT (v = "<<v<<")"<<std::endl;
+            dict.print();
+            std::cout<<"BINARY SEARCH (v = "<<v<<", (steps) i = "<<dict.search(v)<<")"<<std::endl;
+            std::cout<<"INTERPOLATIVE SEARCH (v = "<<v<<", (steps) i = "<<dict.qSearch(v)<<")"<<std::endl;
+            std::cout<<"AFTER DELETION (v = "<<v<<"):"<<std::endl;
+            dict.deleteV(v);
+            dict.print();
+            break;
+        }
+        case BST_TREE: {
+            std::cout<<"<<< BST TREE EXAMPLE >>>"<<std::endl;
 
-    /* Splay tree */
-    // TODO
+            BST dict = BST();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            std::cout<<"IN ORDER: "; dict.print();
+            std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
+            std::cout<<std::endl;
+
+            int v1 = 13;
+            dict.insert(v1);
+            std::cout<<"AFTER INSERT (v = "<<v1<<")"<<std::endl;
+            std::cout<<"IN ORDER: "; dict.print();
+            std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
+            std::cout<<std::endl;
+
+            int v2 = 7;
+            dict.deleteV(v2);
+            std::cout<<"AFTER DELETION (v = "<<v2<<")"<<std::endl;
+            std::cout<<"IN ORDER: "; dict.print();
+            std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
+            std::cout<<std::endl;
+            break;
+        }
+        case AVL_TREE: {
+            std::cout<<"<<< AVL TREE EXAMPLE >>>"<<std::endl;
+
+            AVL dict = AVL();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }std::cout<<"BEFORE INSERT:"<<std::endl;
+            std::cout<<"IN ORDER: "; dict.print();
+            std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
+            std::cout<<std::endl;
+
+            int v1 = 13;
+            dict.insert(v1);
+            std::cout<<"AFTER INSERT (v = "<<v1<<")"<<std::endl;
+            std::cout<<"IN ORDER: "; dict.print();
+            std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
+            std::cout<<std::endl;
+
+            int v2 = 7;
+            dict.deleteV(v2);
+            std::cout<<"AFTER DELETION (v = "<<v2<<")"<<std::endl;
+            std::cout<<"IN ORDER: "; dict.print();
+            std::cout<<"LEVEL ORDER: "; dict.printLevelOrder();
+            std::cout<<std::endl;
+            break;
+        }
+        default:
+            break;
+    }
 }
 

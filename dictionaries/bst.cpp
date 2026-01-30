@@ -8,18 +8,18 @@
 namespace dictionaries {
 
 // constructor
-Bst::Bst() {
+BST::BST() {
     root = nullptr;
     srand(time(NULL));
 }
 
 // return root
-Bst::node *Bst::getRoot() {
+BST::node *BST::getRoot() {
     return root;
 }
 
 // searches for element v in BST tree
-Bst::node **Bst::search(int v) {
+BST::node **BST::search(int v) {
     node **p = &root;
 
     while (*p && (*p)->key != v) {
@@ -33,7 +33,7 @@ Bst::node **Bst::search(int v) {
 }
 
 // inserts element v to BST tree
-void Bst::insert(int v) {
+void BST::insert(int v) {
     node **p = search(v);
 
     // if element already exists
@@ -47,7 +47,7 @@ void Bst::insert(int v) {
 }
 
 // deletes element v from BST tree
-void Bst::deleteV(int v) {
+void BST::deleteV(int v) {
     node *pv, **q, **p;
     p = search(v);
 
@@ -80,16 +80,16 @@ void Bst::deleteV(int v) {
 }
 
 // prints BST tree in order
-void Bst::print(node const *root) {
+void BST::printR(node const *root) {
     if (!root) return;
 
-    print(root->left);
+    printR(root->left);
     std::cout<<root->key<<" ";
-    print(root->right);
+    printR(root->right);
 }
 
 // prints elements level order
-void Bst::printLevelOrder(node *root) {
+void BST::printLevelOrderR(node *root) {
     if (!root) return;
     std::queue<node*> q;
     q.push(root);
@@ -98,9 +98,22 @@ void Bst::printLevelOrder(node *root) {
         node *p = q.front();
         q.pop();
         std::cout<<p->key<<" ";
+        // push to queue
         if (p->left) q.push(p->left);
         if (p->right) q.push(p->right);
     }
+}
+
+// print method for class object
+void BST::print() {
+    printR(root);
+    std::cout<<std::endl;
+}
+
+// print level order method for class object
+void BST::printLevelOrder() {
+    printLevelOrderR(root);
+    std::cout<<std::endl;
 }
 
 } // dictionaries

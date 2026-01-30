@@ -7,7 +7,7 @@
 
 namespace dictionaries {
 
-class Bst {
+class BST {
 public:
     struct node {
         int key;
@@ -16,13 +16,18 @@ public:
     };
     node *root;
 
-    Bst();
+    BST();
     [[nodiscard]] node* getRoot();
     node **search(int v);
     void insert(int v);
     void  deleteV(int v);
-    static void print(node const *root);
-    static void printLevelOrder(node *root);
+    void print();
+    void printLevelOrder();
+
+private:
+    // recursive functions
+    static void printR(node const *root);
+    static void printLevelOrderR(node *root);
 };
 
 } // dictionaries

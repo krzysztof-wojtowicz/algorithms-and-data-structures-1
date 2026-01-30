@@ -9,19 +9,24 @@
 
 namespace dictionaries {
 
-class Avl : public Bst {
+class AVL : public BST {
 
 public:
-    Avl();
-    static void insert(int v, node *&root, bool &h);
-    static void deleteV(int v, node *&root, bool &h);
-    static void printLevelOrder(node *root);
+    AVL();
+    void insert(int v);
+    void deleteV(int v);
+    void printLevelOrder();
 
 protected:
+    // rotations
     static void RR(node *&p);
     static void LL(node *&p);
     static void LR(node *&p);
     static void RL(node *&p);
+    // recursive functions
+    static void insertR(int v, node *&root, bool &h);
+    static void deleteVR(int v, node *&root, bool &h);
+    static void printLevelOrderR(node *root);
 };
 
 } // dictionaries

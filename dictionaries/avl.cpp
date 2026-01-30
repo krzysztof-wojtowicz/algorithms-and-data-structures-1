@@ -9,15 +9,21 @@
 namespace dictionaries {
 
 // constructor
-Avl::Avl() {
+AVL::AVL() {
     root = nullptr;
 }
 
+// basic insert for class object
+void AVL::insert(int v) {
+    bool h;
+    insertR(v, root, h);
+}
+
 // inserts new element, does rotations if necessary and updates bl
-void Avl::insert(int v, node *&root, bool &h) {
+void AVL::insertR(int v, node *&root, bool &h) {
     node *ptr;
 
-    // root/leaf doesnt exist
+    // root/leaf doesnt exist, insert new node
     if (!root) {
         root = new node;
         root->key = v;
@@ -29,7 +35,10 @@ void Avl::insert(int v, node *&root, bool &h) {
 
     // left subtree
     if (v < root->key) {
-        insert(v, root->left, h);
+        // recursively go down the search path
+        insertR(v, root->left, h);
+
+        // if height changed update bl
         if (h) {
             switch (root->bl) {
                 case 1:
@@ -54,7 +63,10 @@ void Avl::insert(int v, node *&root, bool &h) {
 
     // right subtree
     if (v > root->key) {
-        insert(v, root->right, h);
+        // recursively go down the search path
+        insertR(v, root->right, h);
+
+        // if height changed update bl
         if (h) {
             switch (root->bl) {
                 case 1:
@@ -78,17 +90,28 @@ void Avl::insert(int v, node *&root, bool &h) {
     }
 }
 
+// basic delete for class object
+void AVL::deleteV(int v) {
+    bool h;
+    deleteVR(v, root, h);
+}
+
 // deletes element v
-void Avl::deleteV(int v, node *&root, bool &h) {
+void AVL::deleteVR(int v, node *&root, bool &h) {
     node *ptr;
 
+    // value doesnt exist in tree
     if (!root) {
         h = false;
         return;
     }
 
+    // left subtree
     if (v < root->key) {
-        deleteV(v, root->left, h);
+        // delete recursively for subtree
+        deleteVR(v, root->left, h);
+
+        // if height changed update bl
         if (h) {
             switch (root->bl) {
                 case 1:
@@ -115,8 +138,12 @@ void Avl::deleteV(int v, node *&root, bool &h) {
         return;
     }
 
+    // right subtree
     if (v > root->key) {
-        deleteV(v, root->right, h);
+        // delete recursively for subtree
+        deleteVR(v, root->right, h);
+
+        // if height changed update bl
         if (h) {
             switch (root->bl) {
                 case -1:
@@ -143,15 +170,21 @@ void Avl::deleteV(int v, node *&root, bool &h) {
         return;
     }
 
+    // else v == root->key
+    // delete similarly to BST trees
     if (root->left && root->right) {
+        // find the biggest element in left subtree to replace with
         node *replacer = root->left;
         while (replacer->right) {
             replacer = replacer->right;
         }
 
+        // replace key
         root->key = replacer->key;
-        deleteV(replacer->key, root->left, h);
+        // delete replacer recursively from left subtree
+        deleteVR(replacer->key, root->left, h);
 
+        // if height changed update bl
         if (h) {
              switch (root->bl) {
                 case 1:
@@ -175,7 +208,9 @@ void Avl::deleteV(int v, node *&root, bool &h) {
                     break;
             }
         }
-    } else {
+    }
+    // only one child or leaf
+    else {
         node *temp = root;
         if (root->left) {
             root = root->left;
@@ -187,8 +222,8 @@ void Avl::deleteV(int v, node *&root, bool &h) {
     }
 }
 
-// RR rotation
-void Avl::RR(node *&p) {
+// RR rotation (single right)
+void AVL::RR(node *&p) {
     node *x = p->right;
     p->right = x->left;
     x->left = p;
@@ -197,8 +232,8 @@ void Avl::RR(node *&p) {
     p = x;
 }
 
-// LL rotation
-void Avl::LL(node *&p) {
+// LL rotation (single left)
+void AVL::LL(node *&p) {
     node *x = p->left;
     p->left = x->right;
     x->right = p;
@@ -207,11 +242,10 @@ void Avl::LL(node *&p) {
     p = x;
 }
 
-// LR rotation
-void Avl::LR(node *&p) {
+// LR rotation (double left)
+void AVL::LR(node *&p) {
     node *x = p->left;
     node *y = x->right;
-
 
     x->right = y->left;
     y->left = x;
@@ -233,8 +267,8 @@ void Avl::LR(node *&p) {
     p = y;
 }
 
-// RL rotation
-void Avl::RL(node *&p) {
+// RL rotation (double right)
+void AVL::RL(node *&p) {
     node *x = p->right;
     node *y = x->left;
 
@@ -258,8 +292,14 @@ void Avl::RL(node *&p) {
     p = y;
 }
 
+// prints level order for class object
+void AVL::printLevelOrder() {
+    printLevelOrderR(root);
+    std::cout<<std::endl;
+}
+
 // prints elements level order
-void Avl::printLevelOrder(node *root) {
+void AVL::printLevelOrderR(node *root) {
     if (!root) return;
     std::queue<node*> q;
     q.push(root);
