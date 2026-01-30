@@ -18,6 +18,7 @@
 #include "dictionaries/b_tree.h"
 #include "dictionaries/splay_tree.h"
 #include "dictionaries/rst.h"
+#include "dictionaries/hash.h"
 
 /* SORTING ALGORITHMS*/
 #include "dictionaries/rst.h"
@@ -53,6 +54,10 @@ enum Dictionary {
     B_TREE,
     SPLAY_TREE,
     RST_TREE,
+    HASH,
+    CHAIN_HASH,
+    OPEN_HASH,
+    DOUBLE_HASH,
 };
 
 void sorting_usage(int tab[], int n, SortingAlgorithm algorithm = BUBBLE, bool isOutput = false);
@@ -72,9 +77,9 @@ int main() {
         }
         case DICTIONARIES: {
             /* DICTIONARIES USAGE EXAMPLE */
-            int A[] = {5,1,8,3,4,9};
-            int n = 6;
-            dictionaries_usage(A, n, RST_TREE);
+            int A[] = {1,3,4,9};
+            int n = 4;
+            dictionaries_usage(A, n, DOUBLE_HASH);
             break;
         }
         case PRIORITY_QUEUES:
@@ -441,6 +446,105 @@ void dictionaries_usage(int tab[], int n, Dictionary dictionary) {
 
             std::cout<<"AFTER DELETION (5):"<<std::endl;
             std::cout<<"LEVEL ORDER: "<<std::endl; dict.printLevelOrder();
+        }
+        case HASH: {
+            std::cout<<"<<< SIMPLE HASH EXAMPLE >>>"<<std::endl;
+
+            Hash dict = Hash();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            dict.print();
+
+            dict.insert(2);
+
+            std::cout<<"AFTER INSERT (2):"<<std::endl;
+            dict.print();
+
+            dict.deleteV(4);
+
+            std::cout<<"AFTER DELETION (4):"<<std::endl;
+            dict.print();
+
+        }
+        case CHAIN_HASH: {
+            std::cout<<"<<< CHAIN HASH EXAMPLE >>>"<<std::endl;
+
+            ChainHash dict = ChainHash();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            dict.print();
+
+            dict.insert(11);
+            dict.insert(14);
+            dict.insert(24);
+
+            std::cout<<"AFTER INSERT (11 & 14 & 24):"<<std::endl;
+            dict.print();
+
+            dict.deleteV(10);
+            dict.deleteV(4);
+            dict.deleteV(11);
+
+            std::cout<<"AFTER DELETION (10 & 4 & 11):"<<std::endl;
+            dict.print();
+        }
+        case OPEN_HASH: {
+            std::cout<<"<<< OPEN HASH EXAMPLE >>>"<<std::endl;
+
+            OpenHash dict = OpenHash();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            dict.print();
+
+            dict.insert(11);
+            dict.insert(14);
+            dict.insert(24);
+            dict.insert(21);
+
+            std::cout<<"AFTER INSERT (11 & 14 & 24 & 21):"<<std::endl;
+            dict.print();
+
+            dict.deleteV(10);
+            dict.deleteV(4);
+            dict.deleteV(11);
+
+            std::cout<<"AFTER DELETION (10 & 4 & 11):"<<std::endl;
+            dict.print();
+
+            std::cout<<"SEARCH FOR 21: i="<<dict.search(21)<<std::endl;
+        }
+        case DOUBLE_HASH: {
+            std::cout<<"<<< DOUBLE HASH EXAMPLE >>>"<<std::endl;
+
+            DoubleHash dict = DoubleHash();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            dict.print();
+
+            dict.insert(11);
+            dict.insert(14);
+            dict.insert(24);
+            dict.insert(21);
+
+            std::cout<<"AFTER INSERT (11 & 14 & 24 & 21):"<<std::endl;
+            dict.print();
+
+            dict.deleteV(10);
+            dict.deleteV(4);
+            dict.deleteV(11);
+
+            std::cout<<"AFTER DELETION (10 & 4 & 11):"<<std::endl;
+            dict.print();
+
+            std::cout<<"SEARCH FOR 21: i="<<dict.search(21)<<std::endl;
         }
         default:
             break;

@@ -34,4 +34,6 @@ add_executable(Kolos1 main.cpp
         dictionaries/BB_tree.h
         dictionaries/rst.cpp
         dictionaries/rst.h
+        dictionaries/hash.cpp
+        dictionaries/hash.h
 )
