@@ -19,6 +19,7 @@
 #include "dictionaries/splay_tree.h"
 #include "dictionaries/rst.h"
 #include "dictionaries/hash.h"
+#include "dictionaries/sbb_tree.h"
 
 /* SORTING ALGORITHMS*/
 #include "dictionaries/rst.h"
@@ -58,6 +59,7 @@ enum Dictionary {
     CHAIN_HASH,
     OPEN_HASH,
     DOUBLE_HASH,
+    SBB_TREE,
 };
 
 void sorting_usage(int tab[], int n, SortingAlgorithm algorithm = BUBBLE, bool isOutput = false);
@@ -77,9 +79,9 @@ int main() {
         }
         case DICTIONARIES: {
             /* DICTIONARIES USAGE EXAMPLE */
-            int A[] = {1,3,4,9};
-            int n = 4;
-            dictionaries_usage(A, n, DOUBLE_HASH);
+            int A[] = {1,2,3,4,5,6,7,8,9};
+            int n = 9;
+            dictionaries_usage(A, n, SBB_TREE );
             break;
         }
         case PRIORITY_QUEUES:
@@ -545,6 +547,22 @@ void dictionaries_usage(int tab[], int n, Dictionary dictionary) {
             dict.print();
 
             std::cout<<"SEARCH FOR 21: i="<<dict.search(21)<<std::endl;
+        }
+        // TODO delete in sbb_tree
+        case SBB_TREE: {
+            std::cout<<"<<< SBB TREE (2-3-4) EXAMPLE >>>"<<std::endl;
+
+            SBBTree dict = SBBTree();
+            for (int i = 0; i < n; i++) {
+                dict.insert(tab[i]);
+            }
+            std::cout<<"BEFORE INSERT:"<<std::endl;
+            dict.printLevelOrder();
+
+            dict.insert(10);
+
+            std::cout<<"AFTER INSERT (10):"<<std::endl;
+            dict.printLevelOrder();
         }
         default:
             break;

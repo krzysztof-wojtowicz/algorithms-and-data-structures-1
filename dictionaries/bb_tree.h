@@ -9,9 +9,17 @@
 
 namespace dictionaries {
 
-class BBTree : public BST {
+class BBTree {
 public:
-    void insert(int v); // NOT IMPLEMENTED
+    struct node {
+        int key;
+        node *next[2];
+        int flag;           // 1 if right connection is horizontal
+    } *root;
+
+    node **search(int v);   // NOT IMPLEMENTED TODO
+    void insert(int v);     // NOT IMPLEMENTED TODO
+    void deleteV(int v);    // NOT IMPLEMENTED TODO
 };
 
 } // dictionaries
