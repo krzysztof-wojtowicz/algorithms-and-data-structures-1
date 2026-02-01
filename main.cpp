@@ -22,29 +22,36 @@
 #include "dictionaries/sbb_tree.h"
 
 /* SORTING ALGORITHMS*/
-#include "dictionaries/rst.h"
-#include "sorting/sort.h"
+#include "sorting/sort_arrays.h"
 
 using namespace priority_queues;
 using namespace dictionaries;
 using namespace sorting;
 
 enum ProgramType {
-    SORTING_ALGORITHMS,
+    SORTING_ARRAYS,
+    SORTING_LISTS,
     DICTIONARIES,
     PRIORITY_QUEUES,
 };
 
-enum SortingAlgorithm {
+enum SortingArrays {
     SELECTION,
     INSERTION,
     BUBBLE,
     MIX,
     COMB,
     HEAP,
-    HEAP2,
     QUICK,
     QUICK2,
+    MERGE,
+    SHELL,
+    COUNT,
+};
+
+enum SortingLists {
+    MERGE_LIST,
+    BUCKET,
 };
 
 enum Dictionary {
@@ -62,19 +69,19 @@ enum Dictionary {
     SBB_TREE,
 };
 
-void sorting_usage(int tab[], int n, SortingAlgorithm algorithm = BUBBLE, bool isOutput = false);
+void sorting_arrays_usage(int tab[], int n, SortingArrays algorithm = BUBBLE, bool isOutput = false);
 void priority_queues_usage();
 void dictionaries_usage(int tab[], int n, Dictionary dictionary = UNORDERED_ARRAY);
 
-int main() {
-    ProgramType type = DICTIONARIES;
+int main(int argc, char** argv) {
+    ProgramType type = SORTING_ARRAYS;
 
     switch (type) {
-        case SORTING_ALGORITHMS: {
+        case SORTING_ARRAYS: {
             /* SORTING ALGORITHMS USAGE EXAMPLE */
-            int A[] = {-100,3,5,2,1,4,6,0,7}; // A[0] => sentinel
-            int n = 8; // without sentinel
-            sorting_usage(A, n, QUICK, true);
+            int A[] = {-1000,3,5,2,1,4,6,0,6,2,0,1}; // A[0] => sentinel
+            int n = 11; // how many elements without sentinel
+            sorting_arrays_usage(A, n, COUNT, true);
             break;
         }
         case DICTIONARIES: {
@@ -94,46 +101,52 @@ int main() {
     return 0;
 }
 
-void sorting_usage(int tab[], int n, SortingAlgorithm algorithm, bool isOutput) {
+void sorting_arrays_usage(int tab[], int n, SortingArrays algorithm, bool isOutput) {
     std::cout<<"BEFORE:"<<std::endl;
-    Sort::printTab(tab, n);
+    SortArrays::printTab(tab, n);
     std::cout<<std::endl;
 
     switch (algorithm) {
         case SELECTION:
-            Sort::selection(tab, n, isOutput);
+            SortArrays::selection(tab, n, isOutput);
             break;
         case INSERTION:
-            Sort::insertion(tab, n, isOutput);
+            SortArrays::insertion(tab, n, isOutput);
             break;
         case BUBBLE:
-            Sort::bubble(tab, n, isOutput);
+            SortArrays::bubble(tab, n, isOutput);
             break;
         case MIX:
-            Sort::mix(tab, n, isOutput);
+            SortArrays::mix(tab, n, isOutput);
             break;
         case COMB:
-            Sort::comb(tab, n, isOutput);
+            SortArrays::comb(tab, n, isOutput);
             break;
         case HEAP:
-            Sort::heap(tab, n, isOutput);
-            break;
-        case HEAP2:
-            Sort::heap2(tab, n, isOutput);
+            SortArrays::heap(tab, n, isOutput);
             break;
         case QUICK:
-            Sort::quick(tab, n, isOutput);
+            SortArrays::quick(tab, n, isOutput);
             break;
         case QUICK2:
-            Sort::quick2(tab, n, isOutput);
+            SortArrays::quick2(tab, n, isOutput);
+            break;
+        case MERGE:
+            SortArrays::merge(tab, n, isOutput);
+            break;
+        case SHELL:
+            SortArrays::shell(tab, n, isOutput);
+            break;
+        case COUNT:
+            SortArrays::count(tab, n, isOutput);
             break;
         default:
-            Sort::bubble(tab, n, isOutput);
+            SortArrays::bubble(tab, n, isOutput);
             break;
     }
 
     std::cout<<std::endl<<"AFTER:"<<std::endl;
-    Sort::printTab(tab, n);
+    SortArrays::printTab(tab, n);
     std::cout<<std::endl;
 }
 

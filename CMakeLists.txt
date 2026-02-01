@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.29)
-project(Kolos1)
+project(ads1)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Kolos1 main.cpp
+add_executable(ads1 main.cpp
         priority_queues/list.h
         priority_queues/list.cpp
         priority_queues/tree.cpp
@@ -26,8 +26,8 @@ add_executable(Kolos1 main.cpp
         dictionaries/b_tree.h
         dictionaries/splay_tree.cpp
         dictionaries/splay_tree.h
-        sorting/sort.cpp
-        sorting/sort.h
+        sorting/sort_arrays.cpp
+        sorting/sort_arrays.h
         dictionaries/array.cpp
         dictionaries/array.h
         dictionaries/BB_tree.cpp
@@ -38,4 +38,6 @@ add_executable(Kolos1 main.cpp
         dictionaries/hash.h
         dictionaries/sbb_tree.cpp
         dictionaries/sbb_tree.h
+        sorting/sort_lists.cpp
+        sorting/sort_lists.h
 )

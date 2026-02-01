@@ -2,10 +2,9 @@
 // Created by Krzysztof Wójtowicz on 18/01/2026.
 //
 
-#include "sort.h"
+#include "sort_arrays.h"
 #include <iostream>
 #include <algorithm>
-#include "../priority_queues/leftist_skew_heap.h"
 #include "../priority_queues/heap.h"
 
 using namespace priority_queues;
@@ -13,7 +12,7 @@ using namespace priority_queues;
 namespace sorting {
 
 // selection sort algorithm
-void Sort::selection(int tab[], int n, bool isOutput) {
+void SortArrays::selection(int tab[], int n, bool isOutput) {
     if (isOutput) std::cout<<"<<< SELECTION SORT >>>"<<std::endl;
 
     for (int i = 1; i < n; i++) {
@@ -33,7 +32,7 @@ void Sort::selection(int tab[], int n, bool isOutput) {
 }
 
 // insertion sort algorithm
-void Sort::insertion(int tab[], int n, bool isOutput) {
+void SortArrays::insertion(int tab[], int n, bool isOutput) {
     if (isOutput) std::cout<<"<<< INSERTION SORT >>>"<<std::endl;
 
     // sentinel
@@ -50,14 +49,14 @@ void Sort::insertion(int tab[], int n, bool isOutput) {
         tab[j+1] = v;
 
         if (isOutput) {
-            std::cout<<"TAB: [i="<<i<<"]"<<std::endl;
+            std::cout<<"TAB: [i="<<i<<",j="<<j<<"]"<<std::endl;
             printTab(tab, n);
         }
     }
 }
 
 // bubble sort algorithm
-void Sort::bubble(int tab[], int n, bool isOutput) {
+void SortArrays::bubble(int tab[], int n, bool isOutput) {
     if (isOutput) std::cout<<"<<< BUBBLE SORT >>>"<<std::endl;
 
     for (int i = 1; i < n; i++) {
@@ -75,7 +74,7 @@ void Sort::bubble(int tab[], int n, bool isOutput) {
 }
 
 // mix sort algorithm (bubble sort from both sides)
-void Sort::mix(int tab[], int n, bool isOutput) {
+void SortArrays::mix(int tab[], int n, bool isOutput) {
     if (isOutput) std::cout<<"<<< MIX SORT >>>"<<std::endl;
 
     int l = 1;
@@ -116,7 +115,7 @@ void Sort::mix(int tab[], int n, bool isOutput) {
 }
 
 // comb sort algorithm
-void Sort::comb(int tab[], int n, bool isOutput) {
+void SortArrays::comb(int tab[], int n, bool isOutput) {
     if (isOutput) std::cout<<"<<< COMB SORT >>>"<<std::endl;
 
     int gap = n;
@@ -143,7 +142,7 @@ void Sort::comb(int tab[], int n, bool isOutput) {
 }
 
 // heap sort algorithm using regular heap (implemented in priority_queues)
-void Sort::heap(int tab[], int n, bool isOutput) {
+void SortArrays::heap(int tab[], int n, bool isOutput) {
     if (isOutput) std::cout<<"<<< HEAP SORT (regular heap) >>>"<<std::endl;
 
     // create heap from tab
@@ -155,14 +154,11 @@ void Sort::heap(int tab[], int n, bool isOutput) {
     }
 
     // insert elements from heap to tab
-    int i = n;
     while (heap.getHl() > 0) {
-        int val = heap.delMax();
-        tab[i] = val;
-        i--;
+        tab[heap.getHl()+1] = heap.delMax();
 
         if (isOutput) {
-            std::cout<<"TAB: [i="<<i<<"]"<<std::endl;
+            std::cout<<"TAB: [i="<<heap.getHl()<<"]"<<std::endl;
             printTab(tab, n);
             std::cout<<"HEAP STATE:"<<std::endl;
             heap.printHeap();
@@ -170,54 +166,22 @@ void Sort::heap(int tab[], int n, bool isOutput) {
     }
 }
 
-// heap sort algorithm using leftist heap (implemented in priority_queues)
-void Sort::heap2(int tab[], int n, bool isOutput) {
-    if (isOutput) std::cout<<"<<< HEAP SORT (leftist heap) >>>"<<std::endl;
-
-    // create heap from tab
-    auto heap = LeftistHeap();
-    for (int i = 1; i <= n; i++) {
-        heap.insert(tab[i]);
-    }
-    if (isOutput) {
-        std::cout<<"HEAP STATE (level order):"<<std::endl;
-        LeftistHeap::printLevelOrder(heap.getRoot());
-        std::cout<<std::endl;
-    }
-
-    // insert elements from heap to tab
-    int i = n;
-    while (heap.getRoot()) {
-        int val = heap.delMax()->val;
-        tab[i] = val;
-        i--;
-
-        if (isOutput) {
-            std::cout<<"TAB: [i="<<i<<"]"<<std::endl;
-            printTab(tab, n);
-            std::cout<<"HEAP STATE (level order):"<<std::endl;
-            LeftistHeap::printLevelOrder(heap.getRoot());
-            std::cout<<std::endl;
-        }
-    }
-}
-
 // quick sort algorithm using partition 1 (Hoare method)
-void Sort::quick(int tab[], int n, bool isOutput) {
+void SortArrays::quick(int tab[], int n, bool isOutput) {
     if (isOutput) std::cout<<"<<< QUICK SORT (Hoare method) >>>"<<std::endl;
 
     quickR(tab, 1, n, isOutput, 1);
 }
 
 // quick sort algorithm using partition 2 (Lomuto method)
-void Sort::quick2(int tab[], int n, bool isOutput) {
+void SortArrays::quick2(int tab[], int n, bool isOutput) {
     if (isOutput) std::cout<<"<<< QUICK SORT (Lomuto method) >>>"<<std::endl;
 
     quickR(tab, 1, n, isOutput, 2);
 }
 
 // partition function for quick sort algorithm (version 1)
-int Sort::partition1(int tab[], int l, int r) {
+int SortArrays::partition1(int tab[], int l, int r) {
     // select first element as pivot
     int v = tab[l];
     // two indexes
@@ -245,7 +209,7 @@ int Sort::partition1(int tab[], int l, int r) {
 }
 
 // partition function for quick sort algorithm (version 2)
-int Sort::partition2(int tab[], int l, int r) {
+int SortArrays::partition2(int tab[], int l, int r) {
     // select last elements as pivot
     int v = tab[r];
     // one index
@@ -264,7 +228,7 @@ int Sort::partition2(int tab[], int l, int r) {
 }
 
 // recursive function for quick sort
-void Sort::quickR(int tab[], int l, int r, bool isOutput, int partitionType) {
+void SortArrays::quickR(int tab[], int l, int r, bool isOutput, int partitionType) {
     int j;
     // partition
     switch (partitionType) {
@@ -292,14 +256,192 @@ void Sort::quickR(int tab[], int l, int r, bool isOutput, int partitionType) {
     }
 }
 
+// merge sort algorithm
+void SortArrays::merge(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< MERGE SORT >>>"<<std::endl;
+
+    mergeR(tab, 1, n, isOutput);
+}
+
+// recursive method for merge sort
+void SortArrays::mergeR(int tab[], int l, int r, bool isOutput) {
+    // final step
+    if (l == r)
+        return;
+
+    // split to two sub arrays
+    int m = (l + r)/2;
+
+    // recursive call for two sub arrays
+    mergeR(tab, l, m, isOutput);
+    mergeR(tab, m + 1, r, isOutput);
+
+    // merge two subarrays (they are now ordered after recursive call)
+    mergeSub(tab, l, m, m + 1, r);
+
+    if (isOutput) {
+        std::cout<<"  MERGE STEP: ";
+        for (int i = l; i <= r; i++) {
+            std::cout<<tab[i]<<" ";
+        }
+        std::cout<<std::endl;
+    }
+}
+
+// merge two subarrays for merge sort method
+void SortArrays::mergeSub(int tab[], int l1, int r1, int l2, int r2) {
+    // iterate from left side of each part and
+    // insert values in correct order to temp array
+    int i = l1;
+    int j = l2;
+    int k = 0;
+
+    // temp array
+    int size = (r1 - l1 + 1) + (r2 - l2 + 1);
+    int temp[size];
+
+    // insert values in correct order from both parts
+    while (i <= r1 && j <= r2) {
+        if (tab[i] <= tab[j]) {
+            temp[k++] = tab[i++];
+        } else {
+            temp[k++] = tab[j++];
+        }
+    }
+
+    // insert rest of the values form left part
+    while (i <= r1) {
+        temp[k++] = tab[i++];
+    }
+
+    // insert rest of the values from right part
+    while (j <= r2) {
+        temp[k++] = tab[j++];
+    }
+
+    // insert values to original tab
+    for (int m = 0; m < size; m++) {
+        tab[l1 + m] = temp[m];
+    }
+}
+
+// shell sort (modified insertion sort)
+void SortArrays::shell(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< SHELL SORT >>>"<<std::endl;
+
+    // choose h based on array size
+    int h = 2;
+    while (h - 1 < n/2)
+        h *= 2;
+    h--;
+
+    while (h >= 1) {
+        // insertion sort for given h jump
+        for (int j = h + 1; j <= n; j++) {
+            int v = tab[j];
+            int i = j - h;
+
+            // move values to the right to find place for v
+            while (i > 0 && tab[i] > v) {
+                tab[i+h] = tab[i];
+                i -= h;
+            }
+
+            // insert v
+            tab[i+h] = v;
+
+            if (isOutput) {
+                std::cout<<"TAB: [h="<<h<<",j="<<j<<",i="<<i<<"]"<<std::endl;
+                printTab(tab, n);
+            }
+        }
+
+        // update h
+        h = (h + 1)/2 - 1;
+    }
+}
+
+// count sort
+void SortArrays::count(int tab[], int n, bool isOutput) {
+    if (isOutput) std::cout<<"<<< COUNT SORT >>>"<<std::endl;
+
+    // all elements from array are smaller than m
+    int m = max(tab, n);
+
+    // prepare counting array
+    int count[m+1];
+    std::fill(count, count + m + 1, 0);
+
+    // count values
+    for (int i = 1; i <= n; i++)
+        count[tab[i]]++;
+
+    if (isOutput) {
+        std::cout<<" COUNT: ";
+        for (int i = 0; i <= m; i++) {
+            std::cout<<i<<" ["<<count[i]<<"] ";
+        }
+        std::cout<<std::endl;
+    }
+
+    // calculate ending indexes of elements
+    for (int i = 1; i <= m; i++)
+        count[i] += count[i-1];
+
+    if (isOutput) {
+        std::cout<<" INDEX: ";
+        for (int i = 0; i <= m; i++) {
+            std::cout<<i<<" ["<<count[i]<<"] ";
+        }
+        std::cout<<std::endl;
+    }
+
+    // insert to temp array in correct order from the back
+    // this way we ensure stability of this algorithm
+    int temp[n+1];
+    std::fill(temp, temp + n + 1, -1);
+
+    for (int i = n; i > 0; i--) {
+        temp[count[tab[i]]--] = tab[i];
+
+        if (isOutput) {
+            std::cout<<"  STEP: ";
+            for (int i = 1; i <= n; i++) {
+                if (temp[i] != -1) std::cout<<temp[i]<<" ";
+                else std::cout<<"_ ";
+            }
+            std::cout<<std::endl;
+        }
+    }
+
+    // insert values to original array
+    for (int i = 1; i <= n; i++)
+        tab[i] = temp[i];
+}
+
 // prints tab with visualization
-void Sort::printTab(int tab[], int n, int start) {
+void SortArrays::printTab(int tab[], int n, int start) {
     for (int i = start; i <= n; i++) {
         for (int j = 0; j < tab[i]; j++) {
             std::cout<<"-";
         }
         std::cout<<tab[i]<<std::endl;
     }
+}
+
+// returns max element of tab
+int SortArrays::max(int tab[], int n) {
+    if (n < 1)
+        return -1;
+
+    int max = tab[1];
+
+    for (int i = 2; i <= n; i++) {
+        if (tab[i] > max)
+            max = tab[i];
+    }
+
+    return max;
 }
 
 } // sorting
