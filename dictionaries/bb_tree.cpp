@@ -8,6 +8,6 @@ namespace dictionaries {
 
 // insert to BB Tree
 void BBTree::insert(int v) {
-    // NOT IMPLEMENTED
+    // NOT IMPLEMENTED TODO
 }
 } // dictionaries
