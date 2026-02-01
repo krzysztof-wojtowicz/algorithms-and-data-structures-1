@@ -23,6 +23,7 @@
 
 /* SORTING ALGORITHMS*/
 #include "sorting/sort_arrays.h"
+#include "sorting/sort_lists.h"
 
 using namespace priority_queues;
 using namespace dictionaries;
@@ -35,7 +36,7 @@ enum ProgramType {
     PRIORITY_QUEUES,
 };
 
-enum SortingArrays {
+enum SortingArraysAlgorithms {
     SELECTION,
     INSERTION,
     BUBBLE,
@@ -49,12 +50,12 @@ enum SortingArrays {
     COUNT,
 };
 
-enum SortingLists {
+enum SortingListsAlgorithms {
     MERGE_LIST,
     BUCKET,
 };
 
-enum Dictionary {
+enum Dictionaries {
     UNORDERED_ARRAY,
     ORDERED_ARRAY,
     BST_TREE,
@@ -69,19 +70,31 @@ enum Dictionary {
     SBB_TREE,
 };
 
-void sorting_arrays_usage(int tab[], int n, SortingArrays algorithm = BUBBLE, bool isOutput = false);
+// function definitions
+void sorting_arrays_usage(int tab[], int n, SortingArraysAlgorithms algorithm = BUBBLE, bool isOutput = false);
+void sorting_lists_usage(SortLists::node *head, SortLists::node *tail, SortingListsAlgorithms algorithm = BUCKET);
 void priority_queues_usage();
-void dictionaries_usage(int tab[], int n, Dictionary dictionary = UNORDERED_ARRAY);
+void dictionaries_usage(int tab[], int n, Dictionaries dictionary = UNORDERED_ARRAY);
 
+// main program
 int main(int argc, char** argv) {
-    ProgramType type = SORTING_ARRAYS;
+    ProgramType type = SORTING_LISTS;
 
     switch (type) {
         case SORTING_ARRAYS: {
-            /* SORTING ALGORITHMS USAGE EXAMPLE */
+            /* SORTING ALGORITHMS FOR ARRAYS USAGE EXAMPLE */
             int A[] = {-1000,3,5,2,1,4,6,0,6,2,0,1}; // A[0] => sentinel
             int n = 11; // how many elements without sentinel
-            sorting_arrays_usage(A, n, COUNT, true);
+            sorting_arrays_usage(A, n, MERGE, true);
+            break;
+        }
+        case SORTING_LISTS: {
+            /* SORTING ALGORITHMS FOR LISTS USAGE EXAMPLE */
+            int A[] = {3, 1, 8, 4, 2, 1, 9, 3, 5};
+            int n = 9;
+            // create list returns head and tail of created list
+            std::pair<SortLists::node*, SortLists::node*> list = SortLists::createList(A, n);
+            sorting_lists_usage(list.first, list.second, MERGE_LIST);
             break;
         }
         case DICTIONARIES: {
@@ -91,8 +104,9 @@ int main(int argc, char** argv) {
             dictionaries_usage(A, n, SBB_TREE );
             break;
         }
+        // TODO priority queues
         case PRIORITY_QUEUES:
-            // TODO
+
             break;
         default:
             break;
@@ -101,7 +115,8 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void sorting_arrays_usage(int tab[], int n, SortingArrays algorithm, bool isOutput) {
+// example usage of different array sorting algorithms
+void sorting_arrays_usage(int tab[], int n, SortingArraysAlgorithms algorithm, bool isOutput) {
     std::cout<<"BEFORE:"<<std::endl;
     SortArrays::printTab(tab, n);
     std::cout<<std::endl;
@@ -150,6 +165,27 @@ void sorting_arrays_usage(int tab[], int n, SortingArrays algorithm, bool isOutp
     std::cout<<std::endl;
 }
 
+// example usage of different list sorting algorithms
+void sorting_lists_usage(SortLists::node *head, SortLists::node *tail, SortingListsAlgorithms algorithm) {
+    std::cout<<"BEFORE: "; SortLists::printList(head); std::cout<<std::endl;
+
+    switch (algorithm) {
+        case BUCKET:
+            SortLists::bucket(head, tail);
+            std::cout<<std::endl;
+            break;
+        case MERGE_LIST:
+            SortLists::merge(head, tail);
+            std::cout<<std::endl;
+            break;
+        default:
+            break;
+    }
+
+    std::cout<<"AFTER:  "; SortLists::printList(head); std::cout<<std::endl;
+}
+
+// example usage of different priority queues implementations
 void priority_queues_usage() {
     /* unordered list */
     // std::cout<<"Unordered list"<<std::endl;
@@ -304,7 +340,8 @@ void priority_queues_usage() {
     // TODO
 }
 
-void dictionaries_usage(int tab[], int n, Dictionary dictionary) {
+// example usage of different dictionaries implementations
+void dictionaries_usage(int tab[], int n, Dictionaries dictionary) {
     switch (dictionary) {
         case UNORDERED_ARRAY: {
             std::cout<<"<<< UNORDERED ARRAY EXAMPLE >>>"<<std::endl;
