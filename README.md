@@ -96,7 +96,7 @@ After modifying the parameters in `main.cpp`, simply rebuild the project by runn
 * **Time Complexity:** The project serves as a great tool for analyzing time complexity. For example, console outputs highlight the differences between inserting into an unordered list (O(1)) versus an ordered list (O(n)).
 * **Extensibility:** The class-based architecture (utilizing inheritance or composition) within specific folders makes it easy to write and plug in your own modules without disrupting the existing codebase.
 
-* ---
+---
 
-**Author:** Krzysztof Wójtowicz
+**Author:** Krzysztof Wójtowicz<br>
 **Course:** Algorithms and Data Structures 1 (Algorytmy i struktury danych 1) @ MiNI WUT
